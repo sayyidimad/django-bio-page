@@ -7,58 +7,32 @@
     <h1 class="h3 mb-0 text-gray-800">Personal</h1>
 </div>
 
+
+{% if form.errors %}
+<div class="alert alert-danger" role="alert">
+    {{ form.errors }}
+</div>
+{% endif %}
 <!-- Content Row -->
 <div class="row">
 
     <!-- Content Column -->
     <div class="col-lg-4 offset-lg-2 mb-4">
 
-        <!-- Collapsable Card Example -->
-        <div class="card shadow mb-4">
-            <!-- Card Header - Accordion -->
-            <a href="#addListCard" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                aria-expanded="true" aria-controls="addListCard">
-                <h6 class="m-0 font-weight-bold text-primary">Add New Link</h6>
-            </a>
-            <!-- Card Content - Collapse -->
-            <div class="collapse show" id="addListCard">
-                <div class="card-body">
+        <div class="row mb-5 px-3">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#linkModal">
+                Add New Link
+            </button>
 
-                    {% if form.errors %}
-                    <div class="alert alert-danger" role="alert">
-                        {{ form.errors }}
-                    </div>
-                    {% endif %}
-
-                    <form action="" method="post" class="user">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" name="title" id="title"
-                                placeholder="Title">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" name="url" id="url"
-                                placeholder="Url">
-                        </div>
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox small">
-                                <input type="checkbox" class="custom-control-input" name="is_active" id="isActive">
-                                <label class="custom-control-label" for="isActive">Active</label>
-                            </div>
-                        </div>
-                        <input type="submit" value="Add" class="btn btn-primary btn-user btn-block" />
-                    </form>
-                </div>
-            </div>
         </div>
-
         {% if object_list.count < 1 %} <p class="text-center">You don't have any links to display.</p>
             <p class="text-center">Click the button above to add one.</p>
             {% else %}
 
             {% for link in object_list %}
             <div
-                class="card {% if link.is_active %}border-left-success{% else %}border-left-secondary{% endif %} shadow mb-4">
+                class="card {% if link.is_active %}border-left-success{% else %}border-left-secondary{% endif %} shadow mt-3">
                 <div class="card-body">
                     <h5 class="card-title">{{ link.title }}</h5>
                     <a href="{{ link.url }}" class="card-link">{{ link.url }}</a>
@@ -68,6 +42,41 @@
 
             {% endif %}
     </div>
+</div>
 
+<!-- Modal -->
+<div class="modal fade" id="linkModal" tabindex="-1" aria-labelledby="linkModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="linkModalLabel">Add New Link</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="" method="post" class="user">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user" name="title" id="title"
+                            placeholder="Title">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user" name="url" id="url" placeholder="Url">
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox small">
+                            <input type="checkbox" class="custom-control-input" name="is_active" id="isActive">
+                            <label class="custom-control-label" for="isActive">Active</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
