@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@{{ user.username }} | Bio Link</title>
+
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid mb-5">
+        <div class="row d-sm-flex justify-content-center mt-5 mb-3">
+            <div class="">
+                <img src="{% static 'img/undraw_profile.svg' %}" alt="" class="rounded-circle"
+                    style="width: 96px; height: 96px;">
+                <p class="text-center mt-3 text-dark">@{{ user.username }}</p>
+            </div>
+        </div>
+        {% for link in links %}
+        {% if link.is_active %}
+
+        <div class="row">
+            <div class="col-lg-4 offset-lg-4 mb-4">
+                <!-- Collapsable Card Example -->
+                <!-- <div class="card shadow">
+                    <a href="#card-{{ link.title|slugify }}" class="d-block card-header bg-primary py-3"
+                        data-toggle="collapse" role="button" aria-expanded="true"
+                        aria-controls="card-{{ link.title|slugify }}">
+                        <h6 class="m-0 text-center font-weight-bold text-white ml-4">{{ link.title }}</h6>
+                    </a>
+                    <div class="collapse" id="card-{{ link.title|slugify }}">
+                        <div class="card-body">
+                            <iframe src="{{ link.embed_url }}" class="w-100 rounded" height="380" frameborder="0"
+                                allowtransparency="true" allow="encrypted-media"></iframe>
+                            <a class="btn mt-3 btn-dark btn-block" href="{{ link.url }}" role="button">Open in
+                                Spotify</a>
+                        </div>
+                    </div>
+                </div> -->
+
+                <a class="btn btn-primary btn-lg btn-block" href="{{ link.url }}" target="_blank" role="button">{{ link.title }}</a>
+                <!-- <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button> -->
+
+            </div>
+        </div>
+        {% endif %}
+
+        {% endfor %}
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+</html>
